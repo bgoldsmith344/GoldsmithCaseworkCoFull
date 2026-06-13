@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import WhyGoldsmith from '../components/WhyGoldsmith.astro';
+import WorkCard from '../components/WorkCard.astro';
+import CheckList from '../components/CheckList.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import Button from '../components/Button.astro';
+import { home, services, work } from '../content/site.ts';
+
+const workHighlights = work.items.slice(0, 3);
+---
+<Base
+  title="Microvellum Drafting & Engineering Service"
+  description={home.hero.subline}
+>
+  <Hero />
+
+  <!-- What we do -->
+  <section class="section">
+    <div class="container narrow stack" style="text-align:center; justify-items:center; display:grid;">
+      <p class="eyebrow">{home.whatWeDo.title}</p>
+      <h2>We take the drafting off your plate</h2>
+      <p class="lead">{home.whatWeDo.body}</p>
+      <Button href={home.whatWeDo.cta.href} variant="primary">{home.whatWeDo.cta.label}</Button>
+    </div>
+  </section>
+
+  <!-- Services teaser -->
+  <section class="section section--paper">
+    <div class="container">
+      <p class="eyebrow">{home.servicesTeaser.title}</p>
+      <h2>{home.servicesTeaser.intro}</h2>
+      <div class="grid grid--3" style="margin-top: var(--space-4)">
+        {services.map((s) => (
+          <ServiceCard title={s.title} summary={s.summary} icon={s.icon} href={`/services#${s.slug}`} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2>A simple, low-risk hand-off</h2>
+      <div style="margin-top: var(--space-4)"><ProcessSteps /></div>
+    </div>
+  </section>
+
+  <!-- Why Goldsmith -->
+  <section class="section section--ink">
+    <div class="container">
+      <p class="eyebrow">Why Goldsmith</p>
+      <h2>The difference a US-based specialist makes</h2>
+      <div style="margin-top: var(--space-4)"><WhyGoldsmith /></div>
+    </div>
+  </section>
+
+  <!-- Work highlights -->
+  <section class="section section--paper">
+    <div class="container">
+      <div class="work-head">
+        <div>
+          <p class="eyebrow">Our work</p>
+          <h2>Drawings built to your standards</h2>
+        </div>
+        <Button href="/work" variant="secondary">See all work</Button>
+      </div>
+      <div class="grid grid--3" style="margin-top: var(--space-4)">
+        {workHighlights.map((w) => (
+          <WorkCard title={w.title} category={w.category} image={w.image} alt={w.alt} caption={w.caption} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="section">
+    <div class="container narrow stack">
+      <p class="eyebrow">About</p>
+      <h2>{home.aboutTeaser.title}</h2>
+      <p class="lead">{home.aboutTeaser.body}</p>
+      <Button href={home.aboutTeaser.cta.href} variant="secondary">{home.aboutTeaser.cta.label}</Button>
+    </div>
+  </section>
+
+  <!-- Count on us / checklist -->
+  <section class="section section--wood">
+    <div class="container">
+      <p class="eyebrow">{home.checklist.title}</p>
+      <h2>What you can expect, every run</h2>
+      <div style="margin-top: var(--space-4)"><CheckList items={home.checklist.items} /></div>
+    </div>
+  </section>
+
+  <Testimonials />
+  <ClientLogos />
+
+  <ContactCTA
+    title={home.contactBand.title}
+    label={home.contactBand.cta.label}
+    href={home.contactBand.cta.href}
+    text="Tell us about your next project and we'll get back to you with a quote."
+  />
+</Base>
+
+<style>
+  .work-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+</style>

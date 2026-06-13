@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" role="img" aria-label="Brandon — portrait">
+  <defs>
+    <pattern id="p" width="32" height="32" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="32" height="32" fill="#f0e9dd"/>
+      <rect width="16" height="32" fill="#f3e7d6"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="800" fill="url(#p)"/>
+  <rect x="12" y="12" width="576" height="776" fill="none" stroke="#a9743f" stroke-width="2" stroke-dasharray="8 6" rx="10"/>
+  <g font-family="Sora, system-ui, sans-serif" text-anchor="middle">
+    <rect x="150" y="366" width="300" height="68" rx="34" fill="#ffffffd9"/>
+    <text x="300" y="398" font-size="20" font-weight="700" fill="#1c2733">Brandon — portrait</text>
+    <text x="300" y="424" font-size="13" fill="#a9743f">Photo placeholder — swap in later</text>
+  </g>
+</svg>

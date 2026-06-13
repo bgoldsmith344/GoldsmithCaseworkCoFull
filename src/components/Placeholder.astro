@@ -1,0 +1,57 @@
+---
+/**
+ * Placeholder.astro — a clearly-marked image placeholder.
+ * SWAP PATH: drop a real image at `src` (e.g. /images/work/kitchen.jpg) and
+ * update the `alt` text. If `src` points at a real raster image it is shown
+ * directly; otherwise a labelled placeholder box is rendered.
+ */
+interface Props {
+  src?: string;
+  alt: string;
+  label?: string;
+  ratio?: string; // e.g. "4 / 3"
+}
+const { src, alt, label = 'Image placeholder', ratio = '4 / 3' } = Astro.props;
+const isReal = src && /\.(jpg|jpeg|png|webp|avif|svg)$/i.test(src);
+---
+{
+  isReal ? (
+    <img class="ph__img" src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio:${ratio}`} />
+  ) : (
+    <div class="ph" style={`aspect-ratio:${ratio}`} role="img" aria-label={alt}>
+      <span class="ph__label">{label}</span>
+    </div>
+  )
+}
+
+<style>
+  .ph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--wood-tint),
+      var(--wood-tint) 12px,
+      var(--brass-tint) 12px,
+      var(--brass-tint) 24px
+    );
+    border: 1px dashed var(--brass);
+    border-radius: var(--radius-sm);
+    color: var(--brass-dark);
+  }
+  .ph__label {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: var(--fs-small);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+  }
+  .ph__img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+</style>

@@ -1,0 +1,185 @@
+---
+import { site, nav, cta } from '../content/site.ts';
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="wordmark" aria-label={`${site.name} — home`}>
+      <span class="wordmark__name">Goldsmith</span>
+      <span class="wordmark__sub">Casework&nbsp;Co.</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+    </button>
+
+    <nav id="primary-nav" class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="nav__link"
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={cta.href} class="btn btn--primary nav__cta">{cta.label}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 68px;
+  }
+
+  /* wordmark */
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-family: var(--font-head);
+    color: var(--ink);
+  }
+  .wordmark:hover { text-decoration: none; }
+  .wordmark__name {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+  }
+  .wordmark__sub {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--brass-dark);
+  }
+
+  /* nav */
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .nav__list {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+  }
+  .nav__link {
+    font-family: var(--font-head);
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding: 0.4rem 0;
+    border-bottom: 2px solid transparent;
+  }
+  .nav__link:hover { color: var(--brass-dark); text-decoration: none; }
+  .nav__link[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--brass);
+  }
+  .nav__cta { padding: 0.6rem 1.05rem; }
+
+  /* mobile toggle */
+  .menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor: pointer;
+    position: relative;
+  }
+  .menu-toggle__bars,
+  .menu-toggle__bars::before,
+  .menu-toggle__bars::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 20px;
+    height: 2px;
+    background: var(--ink);
+    transform: translateX(-50%);
+    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+  .menu-toggle__bars { top: 50%; margin-top: -1px; }
+  .menu-toggle__bars::before { top: -6px; }
+  .menu-toggle__bars::after { top: 6px; }
+  .menu-toggle[aria-expanded='true'] .menu-toggle__bars { background: transparent; }
+  .menu-toggle[aria-expanded='true'] .menu-toggle__bars::before { transform: translateX(-50%) translateY(6px) rotate(45deg); }
+  .menu-toggle[aria-expanded='true'] .menu-toggle__bars::after { transform: translateX(-50%) translateY(-6px) rotate(-45deg); }
+
+  @media (max-width: 860px) {
+    .menu-toggle { display: block; }
+    .nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: var(--space-2) var(--space-3) var(--space-3);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+    .nav.is-open { display: flex; }
+    .nav__list {
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav__link {
+      display: block;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav__link[aria-current='page'] { border-bottom-color: var(--brass); }
+    .nav__cta { margin-top: var(--space-2); justify-content: center; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    // Close the menu when a link is followed.
+    nav.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
+  }
+</script>

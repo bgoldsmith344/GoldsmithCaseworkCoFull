@@ -1,0 +1,122 @@
+---
+import { quoteForm } from '../content/site.ts';
+const f = quoteForm.fields;
+---
+<form
+  name="quote"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/thanks"
+  class="quote-form"
+>
+  <!-- Netlify needs this hidden input to match the form name on submit. -->
+  <input type="hidden" name="form-name" value="quote" />
+  <!-- Honeypot field (hidden from humans) for spam protection. -->
+  <p class="hp">
+    <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+  </p>
+
+  <div class="quote-form__row">
+    <div class="field">
+      <label for="name">Name <span aria-hidden="true">*</span></label>
+      <input id="name" name="name" type="text" required autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for="company">Shop / company</label>
+      <input id="company" name="company" type="text" autocomplete="organization" />
+    </div>
+  </div>
+
+  <div class="quote-form__row">
+    <div class="field">
+      <label for="email">Email <span aria-hidden="true">*</span></label>
+      <input id="email" name="email" type="email" required autocomplete="email" />
+    </div>
+    <div class="field">
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" />
+    </div>
+  </div>
+
+  <div class="quote-form__row">
+    <div class="field">
+      <label for="software">Software</label>
+      <select id="software" name="software">
+        <option value="">Select…</option>
+        {f.software.map((o) => (<option value={o}>{o}</option>))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="projectType">Project type</label>
+      <select id="projectType" name="project_type">
+        <option value="">Select…</option>
+        {f.projectType.map((o) => (<option value={o}>{o}</option>))}
+      </select>
+    </div>
+  </div>
+
+  <div class="quote-form__row">
+    <div class="field">
+      <label for="scope">Scope</label>
+      <select id="scope" name="scope">
+        <option value="">Select…</option>
+        {f.scope.map((o) => (<option value={o}>{o}</option>))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="timeline">Timeline</label>
+      <select id="timeline" name="timeline">
+        <option value="">Select…</option>
+        {f.timeline.map((o) => (<option value={o}>{o}</option>))}
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="message">Tell us about your project <span aria-hidden="true">*</span></label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn--primary">Send request</button>
+</form>
+
+<style>
+  .quote-form { display: grid; gap: var(--space-3); }
+  .quote-form__row {
+    display: grid;
+    gap: var(--space-3);
+  }
+  @media (min-width: 600px) {
+    .quote-form__row { grid-template-columns: 1fr 1fr; }
+  }
+  .field { display: grid; gap: 0.35rem; }
+  label {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: var(--fs-small);
+    color: var(--ink);
+  }
+  label span { color: var(--brass-dark); }
+  input,
+  select,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.8rem;
+    width: 100%;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--brass);
+    outline-offset: 1px;
+  }
+  textarea { resize: vertical; }
+  .hp { position: absolute; left: -9999px; }
+  .quote-form .btn { justify-self: start; }
+</style>

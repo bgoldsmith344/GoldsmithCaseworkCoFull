@@ -1,0 +1,43 @@
+---
+import { clients } from '../content/site.ts';
+import Placeholder from './Placeholder.astro';
+// Renders nothing until clients exist.
+---
+{
+  clients.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow" style="text-align:center">Shops we've worked with</p>
+        <ul class="logos">
+          {clients.map((c) => (
+            <li class="logos__item">
+              {c.logo ? (
+                <Placeholder src={c.logo} alt={c.name} ratio="3 / 1" label={c.name} />
+              ) : (
+                <span class="logos__name">{c.name}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .logos {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: center;
+  }
+  .logos__name {
+    font-family: var(--font-head);
+    font-weight: 600;
+    color: var(--muted);
+  }
+</style>

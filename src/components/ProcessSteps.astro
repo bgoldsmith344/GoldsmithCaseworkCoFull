@@ -1,0 +1,44 @@
+---
+import { process } from '../content/site.ts';
+---
+<ol class="steps">
+  {
+    process.map((s) => (
+      <li class="steps__item reveal">
+        <span class="steps__num">{String(s.step).padStart(2, '0')}</span>
+        <h3>{s.title}</h3>
+        <p>{s.blurb}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+    counter-reset: step;
+  }
+  @media (min-width: 720px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 980px) {
+    .steps { grid-template-columns: repeat(4, 1fr); }
+  }
+  .steps__item {
+    position: relative;
+    padding-top: var(--space-2);
+    border-top: 3px solid var(--brass-tint);
+  }
+  .steps__num {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--brass);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+  .steps__item h3 { margin-bottom: 0.35rem; }
+</style>

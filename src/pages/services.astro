@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { services, servicesPage } from '../content/site.ts';
+---
+<Base
+  title="Services — Microvellum Drafting, Engineering & Libraries"
+  description="Microvellum drafting, CNC engineering, and product library setup produced in your templates and standards — overflow capacity or an ongoing partner."
+>
+  <section class="section">
+    <div class="container narrow stack">
+      <p class="eyebrow">Services</p>
+      <h1>Drafting and engineering, in your standards</h1>
+      <p class="lead">{servicesPage.intro}</p>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container stack" style="gap: var(--space-6)">
+      {services.map((s, i) => (
+        <article id={s.slug} class="service-block reveal">
+          <div class="service-block__icon"><Icon name={s.icon} size={34} /></div>
+          <div>
+            <p class="eyebrow">0{i + 1}</p>
+            <h2>{s.title}</h2>
+            <p class="lead">{s.details}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow stack">
+      <p class="eyebrow">Engagement</p>
+      <h2>{servicesPage.engagement.title}</h2>
+      <p class="lead">{servicesPage.engagement.body}</p>
+    </div>
+  </section>
+
+  <section class="section section--wood">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2>From your data to production-ready files</h2>
+      <div style="margin-top: var(--space-4)"><ProcessSteps /></div>
+    </div>
+  </section>
+
+  <ContactCTA
+    title="Ready to hand off your next run?"
+    label="Request a Quote"
+    href="/contact"
+    text="Send us the details and we'll come back with a quote and a timeline."
+  />
+</Base>
+
+<style>
+  .service-block {
+    display: grid;
+    gap: var(--space-3);
+    align-items: start;
+  }
+  @media (min-width: 720px) {
+    .service-block { grid-template-columns: 80px 1fr; gap: var(--space-4); }
+  }
+  .service-block__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius);
+    background: var(--brass-tint);
+    color: var(--brass-dark);
+  }
+  .service-block h2 { margin: 0.2rem 0 0.5rem; }
+</style>

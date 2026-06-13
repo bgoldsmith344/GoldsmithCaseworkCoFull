@@ -1,0 +1,55 @@
+/* tokens.css — design tokens (the single place to retune the brand look).
+ * Original palette in a calm, corporate, photo-forward register with a
+ * warm brass accent that nods to the Goldsmith name. */
+
+:root {
+  /* ---- color ---- */
+  --ink: #1c2733;        /* headings, primary dark */
+  --ink-soft: #3a4654;   /* secondary headings */
+  --body: #4b5563;       /* body text */
+  --muted: #6b7280;      /* captions, meta */
+
+  --paper: #faf8f4;      /* warm off-white section bands */
+  --surface: #ffffff;    /* cards / surfaces */
+  --wood-tint: #f0e9dd;  /* subtle warm band variant */
+  --line: #e6e1d8;       /* hairlines / borders */
+
+  --brass: #a9743f;      /* accent: CTAs, links, icons */
+  --brass-dark: #8a5e32; /* hover / active */
+  --brass-tint: #f3e7d6; /* accent wash backgrounds */
+
+  --focus: #2d6cb3;      /* visible focus ring (AA on light bg) */
+
+  /* ---- typography ---- */
+  --font-head: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --fs-h1: clamp(2.2rem, 1.4rem + 3.4vw, 3.4rem);
+  --fs-h2: clamp(1.7rem, 1.2rem + 2vw, 2.4rem);
+  --fs-h3: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem);
+  --fs-lead: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
+  --fs-body: 1.0625rem;   /* ~17px */
+  --fs-small: 0.9rem;
+
+  --lh-body: 1.65;
+  --lh-head: 1.15;
+
+  /* ---- spacing (8px base) ---- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --section-y: clamp(4rem, 8vw, 7rem);
+
+  /* ---- layout ---- */
+  --maxw: 1120px;
+  --maxw-narrow: 760px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(28, 39, 51, 0.04), 0 8px 24px rgba(28, 39, 51, 0.06);
+  --shadow-hover: 0 4px 8px rgba(28, 39, 51, 0.06), 0 16px 40px rgba(28, 39, 51, 0.1);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

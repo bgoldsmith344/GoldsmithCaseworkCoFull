@@ -1,0 +1,22 @@
+---
+import { differentiators } from '../content/site.ts';
+---
+<div class="grid grid--2 why">
+  {
+    differentiators.map((d) => (
+      <div class="why__item reveal">
+        <h3>{d.title}</h3>
+        <p>{d.blurb}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .why__item {
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--brass);
+  }
+  .why__item h3 { margin-bottom: 0.4rem; }
+  .section--ink .why__item p { color: #c7cdd6; }
+</style>

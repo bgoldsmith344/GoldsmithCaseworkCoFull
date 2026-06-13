@@ -1,0 +1,87 @@
+---
+import { site, nav, cta } from '../content/site.ts';
+const year = new Date().getFullYear();
+const showPhone = site.contact.phone && !site.contact.phone.includes('000');
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <span class="footer__name">Goldsmith Casework Co.</span>
+      <p class="footer__tag">{site.tagline}</p>
+      <a href={cta.href} class="btn btn--primary">{cta.label}</a>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <h2 class="footer__h">Explore</h2>
+      <ul>
+        {nav.map((item) => (<li><a href={item.href}>{item.label}</a></li>))}
+      </ul>
+    </nav>
+
+    <div class="footer__contact">
+      <h2 class="footer__h">Contact</h2>
+      <ul>
+        <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+        {showPhone && (<li><a href={`tel:${site.contact.phone.replace(/[^0-9+]/g, '')}`}>{site.contact.phone}</a></li>)}
+        <li>{site.contact.location}</li>
+        <li class="footer__stack">{site.contact.stack}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__base">
+    <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: #c7cdd6;
+    padding-block: var(--space-6) var(--space-4);
+  }
+  .footer__grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+  @media (min-width: 760px) {
+    .footer__grid { grid-template-columns: 1.5fr 1fr 1.5fr; }
+  }
+  .footer__name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+  .footer__tag {
+    margin: var(--space-1) 0 var(--space-3);
+    color: #aab2bd;
+    max-width: 36ch;
+  }
+  .footer__h {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d8a86a;
+    margin-bottom: var(--space-2);
+  }
+  .footer__nav ul,
+  .footer__contact ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .footer a { color: #d6dbe2; }
+  .footer a:hover { color: #fff; }
+  .footer__stack { color: #8b94a1; font-size: var(--fs-small); }
+  .footer__base {
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: var(--fs-small);
+    color: #8b94a1;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkCard from '../components/WorkCard.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { work } from '../content/site.ts';
+---
+<Base
+  title="Work — Sample Casework Drawings & Engineering"
+  description="A sampling of Microvellum shop drawings, CNC engineering, and product libraries Goldsmith Casework Co. delivers for cabinet and millwork shops."
+>
+  <section class="section">
+    <div class="container narrow stack">
+      <p class="eyebrow">Our work</p>
+      <h1>Drawings built to your standards</h1>
+      <p class="lead">{work.intro}</p>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container">
+      <div class="grid grid--3">
+        {work.items.map((w) => (
+          <WorkCard title={w.title} category={w.category} image={w.image} alt={w.alt} caption={w.caption} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCTA
+    title="Want work like this for your shop?"
+    label="Request a Quote"
+    href="/contact"
+    text="Tell us about your project and we'll get you a quote."
+  />
+</Base>

@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { faq } from '../content/site.ts';
+
+// FAQ structured data for richer search results.
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+<Base
+  title="FAQ — Working with Goldsmith Casework Co."
+  description="Common questions about software, templates, turnaround, submittals, retainer capacity, and location."
+>
+  <section class="section">
+    <div class="container narrow stack">
+      <p class="eyebrow">FAQ</p>
+      <h1>Questions, answered</h1>
+      <p class="lead">Don't see yours? <a href="/contact">Get in touch</a> and we'll answer it directly.</p>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container narrow">
+      <dl class="faq">
+        {faq.map((item) => (
+          <div class="faq__item reveal">
+            <dt>{item.q}</dt>
+            <dd>{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <ContactCTA title="Still have questions?" label="Contact Us" href="/contact" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} is:inline />
+</Base>
+
+<style>
+  .faq { display: grid; gap: var(--space-3); }
+  .faq__item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--space-3) var(--space-4);
+    box-shadow: var(--shadow);
+  }
+  .faq dt {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .faq dd { margin: 0; color: var(--body); }
+</style>
