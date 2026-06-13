@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import { faq } from '../content/site.ts';
+import { link } from '../lib/links.ts';
 
 // FAQ structured data for richer search results.
 const faqJsonLd = {
@@ -22,7 +23,7 @@ const faqJsonLd = {
     <div class="container narrow stack">
       <p class="eyebrow">FAQ</p>
       <h1>Questions, answered</h1>
-      <p class="lead">Don't see yours? <a href="/contact">Get in touch</a> and we'll answer it directly.</p>
+      <p class="lead">Don't see yours? <a href={link('/contact')}>Get in touch</a> and we'll answer it directly.</p>
     </div>
   </section>
 

@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { link } from '../lib/links.ts';
 interface Props {
   title: string;
   summary: string;
@@ -8,7 +9,7 @@ interface Props {
 }
 const { title, summary, icon, href = '/services' } = Astro.props;
 ---
-<a href={href} class="service-tile reveal">
+<a href={link(href)} class="service-tile reveal">
   <span class="service-tile__icon"><Icon name={icon} /></span>
   <h3>{title}</h3>
   <p>{summary}</p>

@@ -1,4 +1,5 @@
 ---
+import { link } from '../lib/links.ts';
 interface Props {
   href: string;
   variant?: 'primary' | 'secondary';
@@ -6,6 +7,6 @@ interface Props {
 }
 const { href, variant = 'primary', class: className = '' } = Astro.props;
 ---
-<a href={href} class={`btn btn--${variant} ${className}`}>
+<a href={link(href)} class={`btn btn--${variant} ${className}`}>
   <slot />
 </a>

@@ -5,6 +5,7 @@
  * update the `alt` text. If `src` points at a real raster image it is shown
  * directly; otherwise a labelled placeholder box is rendered.
  */
+import { link } from '../lib/links.ts';
 interface Props {
   src?: string;
   alt: string;
@@ -16,7 +17,7 @@ const isReal = src && /\.(jpg|jpeg|png|webp|avif|svg)$/i.test(src);
 ---
 {
   isReal ? (
-    <img class="ph__img" src={src} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio:${ratio}`} />
+    <img class="ph__img" src={link(src)} alt={alt} loading="lazy" decoding="async" style={`aspect-ratio:${ratio}`} />
   ) : (
     <div class="ph" style={`aspect-ratio:${ratio}`} role="img" aria-label={alt}>
       <span class="ph__label">{label}</span>

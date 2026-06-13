@@ -1,13 +1,12 @@
 ---
 import { site, nav, cta } from '../content/site.ts';
+import { link, isActive } from '../lib/links.ts';
 const path = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
 ---
 
 <header class="header">
   <div class="container header__inner">
-    <a href="/" class="wordmark" aria-label={`${site.name} — home`}>
+    <a href={link('/')} class="wordmark" aria-label={`${site.name} — home`}>
       <span class="wordmark__name">Goldsmith</span>
       <span class="wordmark__sub">Casework&nbsp;Co.</span>
     </a>
@@ -27,9 +26,9 @@ const isActive = (href: string) =>
           nav.map((item) => (
             <li>
               <a
-                href={item.href}
+                href={link(item.href)}
                 class="nav__link"
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-current={isActive(path, item.href) ? 'page' : undefined}
               >
                 {item.label}
               </a>
@@ -37,7 +36,7 @@ const isActive = (href: string) =>
           ))
         }
       </ul>
-      <a href={cta.href} class="btn btn--primary nav__cta">{cta.label}</a>
+      <a href={link(cta.href)} class="btn btn--primary nav__cta">{cta.label}</a>
     </nav>
   </div>
 </header>

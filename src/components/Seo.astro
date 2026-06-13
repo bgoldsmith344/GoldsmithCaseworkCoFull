@@ -5,6 +5,7 @@
  * signal to search engines).
  */
 import { site } from '../content/site.ts';
+import { link } from '../lib/links.ts';
 
 interface Props {
   title?: string;
@@ -17,7 +18,7 @@ const { title, description = site.description, path = '' } = Astro.props;
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
 const canonical = new URL(path, Astro.site ?? site.domain).toString();
 // PLACEHOLDER: replace once a real OG image exists.
-const ogImage = new URL('/images/og-placeholder.svg', Astro.site ?? site.domain).toString();
+const ogImage = new URL(link('/images/og-placeholder.svg'), Astro.site ?? site.domain).toString();
 
 const jsonLd = {
   '@context': 'https://schema.org',

@@ -1,5 +1,6 @@
 ---
 import { quoteForm } from '../content/site.ts';
+import { link } from '../lib/links.ts';
 const f = quoteForm.fields;
 ---
 <form
@@ -7,7 +8,7 @@ const f = quoteForm.fields;
   method="POST"
   data-netlify="true"
   netlify-honeypot="bot-field"
-  action="/thanks"
+  action={link('/thanks')}
   class="quote-form"
 >
   <!-- Netlify needs this hidden input to match the form name on submit. -->

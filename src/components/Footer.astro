@@ -1,5 +1,6 @@
 ---
 import { site, nav, cta } from '../content/site.ts';
+import { link } from '../lib/links.ts';
 const year = new Date().getFullYear();
 const showPhone = site.contact.phone && !site.contact.phone.includes('000');
 ---
@@ -9,13 +10,13 @@ const showPhone = site.contact.phone && !site.contact.phone.includes('000');
     <div class="footer__brand">
       <span class="footer__name">Goldsmith Casework Co.</span>
       <p class="footer__tag">{site.tagline}</p>
-      <a href={cta.href} class="btn btn--primary">{cta.label}</a>
+      <a href={link(cta.href)} class="btn btn--primary">{cta.label}</a>
     </div>
 
     <nav class="footer__nav" aria-label="Footer">
       <h2 class="footer__h">Explore</h2>
       <ul>
-        {nav.map((item) => (<li><a href={item.href}>{item.label}</a></li>))}
+        {nav.map((item) => (<li><a href={link(item.href)}>{item.label}</a></li>))}
       </ul>
     </nav>
 
