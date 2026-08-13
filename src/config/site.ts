@@ -43,7 +43,7 @@ export const site: SiteConfig = {
   // TODO: confirm exact LLC name as registered before this goes live in legal
   // copy (Terms/Privacy) or LocalBusiness schema.
   legalName: null,
-  displayName: "Goldsmith's Casework",
+  displayName: "Goldsmith Casework",
   tagline: "Custom CNC cutting and shop drawings for builders in Northern Michigan.",
 
   // TODO: real phone number. Must be reachable in one tap from every screen
@@ -55,7 +55,7 @@ export const site: SiteConfig = {
   email: null,
 
   // TODO: confirm registered domain.
-  domain: "goldsmithscasework.com",
+  domain: "goldsmithcasework.com",
 
   address: {
     city: "Petoskey",

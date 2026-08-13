@@ -1,6 +1,6 @@
-# Goldsmith's Casework — Website
+# Goldsmith Casework — Website
 
-Marketing site for **Goldsmith's Casework** — custom CNC fabrication and shop drawings for builders in Northern Michigan, plus CNC/CAD workflow consulting nationwide. Built with [Astro](https://astro.build) and Tailwind CSS: a fast, multi-page static site that ships almost no JavaScript.
+Marketing site for **Goldsmith Casework** — custom CNC fabrication and shop drawings for builders in Northern Michigan, plus CNC/CAD workflow consulting nationwide. Built with [Astro](https://astro.build) and Tailwind CSS: a fast, multi-page static site that ships almost no JavaScript.
 
 ---
 

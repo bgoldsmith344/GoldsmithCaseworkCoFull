@@ -1,4 +1,4 @@
-# CLAUDE.md — Goldsmith's Casework Website
+# CLAUDE.md — Goldsmith Casework Website
 
 > Claude Code reads this at the start of every session.
 
@@ -6,9 +6,9 @@
 
 ## WHY — what this is
 
-The marketing site for **Goldsmith's Casework**, a custom CNC fabrication shop in Petoskey, Michigan (run by Brandon Goldsmith), serving Northern Michigan contractors, builders, and cabinet shops.
+The marketing site for **Goldsmith Casework**, a custom CNC fabrication shop in Petoskey, Michigan (run by Brandon Goldsmith), serving Northern Michigan contractors, builders, and cabinet shops.
 
-**The core pitch:** a contractor sends an architect's drawing or a rough sketch; Goldsmith's Casework returns a dimensioned shop drawing for approval; then cuts finished parts that drop straight into place. The competitive moat is the drafting and CAD translation — turning design intent into buildable geometry — not the ownership of a CNC machine.
+**The core pitch:** a contractor sends an architect's drawing or a rough sketch; Goldsmith Casework returns a dimensioned shop drawing for approval; then cuts finished parts that drop straight into place. The competitive moat is the drafting and CAD translation — turning design intent into buildable geometry — not the ownership of a CNC machine.
 
 **Primary audience (~70% of the site's weight):** general contractors, framers, remodelers, and cabinet shops within roughly a 90-minute drive of Petoskey. Often on a phone at a job site — the phone number is reachable in one tap from every screen.
 

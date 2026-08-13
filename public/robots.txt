@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://goldsmithscasework.com/sitemap-index.xml
+Sitemap: https://goldsmithcasework.com/sitemap-index.xml

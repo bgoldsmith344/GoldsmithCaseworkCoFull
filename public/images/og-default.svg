@@ -2,7 +2,7 @@
   <rect width="1200" height="630" fill="#1B3A31"/>
   <path d="M150 500 C150 260 320 120 600 120 C880 120 1050 260 1050 500" fill="none" stroke="#3E86A8" stroke-width="6" stroke-linecap="round"/>
   <line x1="600" y1="60" x2="600" y2="560" stroke="#3E86A8" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="24 8 3 8"/>
-  <text x="150" y="590" font-family="monospace" font-size="28" fill="#F3F5F4">GOLDSMITH'S CASEWORK — PETOSKEY, MI</text>
+  <text x="150" y="590" font-family="monospace" font-size="28" fill="#F3F5F4">GOLDSMITH CASEWORK — PETOSKEY, MI</text>
   <text x="150" y="230" font-family="sans-serif" font-weight="800" font-size="56" fill="#F3F5F4">Send us the print.</text>
   <text x="150" y="300" font-family="sans-serif" font-weight="800" font-size="56" fill="#F3F5F4">We'll send back the parts.</text>
 </svg>
