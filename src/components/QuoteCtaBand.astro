@@ -1,0 +1,24 @@
+---
+import Button from "@/components/Button.astro";
+import PhoneLink from "@/components/PhoneLink.astro";
+
+interface Props {
+  heading?: string;
+  body?: string;
+}
+const {
+  heading = "Let's talk about your next cut.",
+  body = "Send the drawing and we'll tell you what it takes.",
+} = Astro.props;
+---
+
+<section class="bg-ink py-16 text-paper">
+  <div class="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
+    <h2 class="font-display text-h2 font-extrabold">{heading}</h2>
+    <p class="max-w-xl text-paper/75">{body}</p>
+    <div class="flex flex-col items-center gap-3 sm:flex-row">
+      <Button href="/quote/" variant="primary">Request a quote</Button>
+      <PhoneLink class="text-paper" />
+    </div>
+  </div>
+</section>

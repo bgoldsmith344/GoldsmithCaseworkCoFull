@@ -1,64 +1,21 @@
 ---
-import Icon from './Icon.astro';
-import { link } from '../lib/links.ts';
 interface Props {
+  slug: string;
   title: string;
   summary: string;
-  icon: 'drafting' | 'engineering' | 'library';
-  href?: string;
+  specTag: string;
 }
-const { title, summary, icon, href = '/services' } = Astro.props;
+const { slug, title, summary, specTag } = Astro.props;
 ---
-<a href={link(href)} class="service-tile reveal">
-  <span class="service-tile__icon"><Icon name={icon} /></span>
-  <h3>{title}</h3>
-  <p>{summary}</p>
-  <span class="service-tile__more">Learn more <Icon name="arrow" size={16} /></span>
-</a>
 
-<style>
-  .service-tile {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: var(--space-4);
-    box-shadow: var(--shadow);
-    color: var(--body);
-    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
-      border-color 0.25s var(--ease);
-  }
-  .service-tile:hover {
-    text-decoration: none;
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--brass-tint);
-  }
-  .service-tile__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: var(--radius-sm);
-    background: var(--brass-tint);
-    color: var(--brass-dark);
-  }
-  .service-tile h3 { color: var(--ink); }
-  .service-tile__more {
-    margin-top: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-size: var(--fs-small);
-    color: var(--brass-dark);
-  }
-  .service-tile:hover .service-tile__more :global(svg) {
-    transform: translateX(3px);
-    transition: transform 0.2s var(--ease);
-  }
-</style>
+<a
+  href={`/services/${slug}/`}
+  class="group flex flex-col gap-3 border border-ink/15 bg-paper p-6 transition-colors hover:border-blueline"
+>
+  <span class="spec-tag">{specTag}</span>
+  <h3 class="font-display text-lg font-extrabold">{title}</h3>
+  <p class="text-sm text-ink/75">{summary}</p>
+  <span class="mt-auto pt-2 font-mono text-xs font-medium text-blueline-ink group-hover:underline">
+    View service &rarr;
+  </span>
+</a>

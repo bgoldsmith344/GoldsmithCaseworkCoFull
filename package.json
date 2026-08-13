@@ -1,5 +1,5 @@
 {
-  "name": "goldsmith-casework-co",
+  "name": "goldsmiths-casework",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "@fontsource/inter": "^5.1.0",
-    "@fontsource/sora": "^5.1.0",
-    "astro": "^5.18.2"
+    "@fontsource/archivo": "^5.2.5",
+    "@fontsource/ibm-plex-mono": "^5.2.5",
+    "@fontsource/ibm-plex-sans": "^5.2.5",
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.18.2",
+    "tailwindcss": "^4.1.16"
   }
 }

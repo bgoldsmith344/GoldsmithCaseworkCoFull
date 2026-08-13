@@ -1,0 +1,63 @@
+---
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import Button from "@/components/Button.astro";
+import { breadcrumbSchema } from "@/lib/schema";
+
+const crumbs = [{ name: "Home", path: "/" }, { name: "Consulting", path: "/consulting/" }];
+
+const topics = [
+  {
+    title: "Microvellum & Toolbox",
+    body: "Library structure, product setup, standardization, and cleanup of an existing Microvellum data set.",
+  },
+  {
+    title: "Fusion 360 CAM",
+    body: "Toolpath strategy, post-processor setup, and getting a part from model to machine-ready program.",
+  },
+  {
+    title: "Nesting strategy",
+    body: "Sheet layout and nesting decisions that cut waste and machine time, not just theoretical yield.",
+  },
+  {
+    title: "General CAD/CAM workflow",
+    body: "The handoffs between drafting, engineering, and the machine — where most shops lose time.",
+  },
+];
+---
+
+<Base
+  title="Microvellum, Fusion 360 & CNC Workflow Consulting | Goldsmith's Casework"
+  description="Consulting for shop owners and CNC operators on Microvellum, Fusion 360 CAM, nesting strategy, and CAD/CAM workflow, from Goldsmith's Casework."
+  path="/consulting/"
+  jsonLd={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-3xl px-6 py-12">
+    <span class="spec-tag">For shop owners & CNC operators</span>
+    <h1 class="mt-2 font-display text-h1 font-extrabold">CNC & CAD/CAM workflow consulting</h1>
+    <p class="mt-4 text-lede text-ink/75">
+      Cutting parts locally is one side of this business. The other is helping other shops get more out of Microvellum, Fusion 360 CAM, and their own CNC workflow — the same drafting and programming discipline behind every part we cut, applied to your shop instead of ours.
+    </p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {topics.map((topic) => (
+        <div class="border border-ink/15 p-6">
+          <h2 class="font-display text-base font-extrabold">{topic.title}</h2>
+          <p class="mt-2 text-sm text-ink/75">{topic.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 border-t border-ink/10 pt-8">
+      <h2 class="font-display text-h3 font-extrabold">Booking time</h2>
+      <p class="mt-3 max-w-xl text-ink/75">
+        Reach out with what you're working through — a library that's gotten unwieldy, a post-processor that's fighting you, a nesting setup that's leaving material on the table — and we'll figure out the right format from there.
+      </p>
+      <div class="mt-6">
+        <Button href="/contact/" variant="secondary">Get in touch</Button>
+      </div>
+    </div>
+  </section>
+</Base>

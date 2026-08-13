@@ -1,88 +1,55 @@
 ---
-import { site, nav, cta } from '../content/site.ts';
-import { link } from '../lib/links.ts';
-const year = new Date().getFullYear();
-const showPhone = site.contact.phone && !site.contact.phone.includes('000');
+import { site } from "@/config/site";
+import { primaryNav, legalNav } from "@/lib/nav";
+import PhoneLink from "@/components/PhoneLink.astro";
+import { isDev } from "@/lib/placeholder";
 ---
 
-<footer class="footer">
-  <div class="container footer__grid">
-    <div class="footer__brand">
-      <span class="footer__name">Goldsmith Casework Co.</span>
-      <p class="footer__tag">{site.tagline}</p>
-      <a href={link(cta.href)} class="btn btn--primary">{cta.label}</a>
+<footer class="border-t border-ink/10 bg-spruce text-paper">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-10 md:grid-cols-4">
+      <div>
+        <p class="font-display text-lg font-extrabold">{site.displayName}</p>
+        <p class="mt-2 max-w-xs text-sm text-paper/75">{site.tagline}</p>
+      </div>
+
+      <div>
+        <p class="spec-tag text-paper/60">Contact</p>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><PhoneLink class="text-paper" /></li>
+          {site.email ? (
+            <li><a href={`mailto:${site.email}`} class="hover:underline">{site.email}</a></li>
+          ) : isDev ? (
+            <li class="text-amber">[TODO: email]</li>
+          ) : null}
+          <li>{site.address.city}, {site.address.state}</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="spec-tag text-paper/60">Site</p>
+        <ul class="mt-3 space-y-2 text-sm">
+          {primaryNav.map((item) => (
+            <li><a href={item.href} class="hover:underline">{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="spec-tag text-paper/60">Serving Northern Michigan</p>
+        <p class="mt-3 text-sm text-paper/75">
+          {site.serviceArea.join(" · ")}
+        </p>
+      </div>
     </div>
 
-    <nav class="footer__nav" aria-label="Footer">
-      <h2 class="footer__h">Explore</h2>
-      <ul>
-        {nav.map((item) => (<li><a href={link(item.href)}>{item.label}</a></li>))}
-      </ul>
-    </nav>
-
-    <div class="footer__contact">
-      <h2 class="footer__h">Contact</h2>
-      <ul>
-        <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
-        {showPhone && (<li><a href={`tel:${site.contact.phone.replace(/[^0-9+]/g, '')}`}>{site.contact.phone}</a></li>)}
-        <li>{site.contact.location}</li>
-        <li class="footer__stack">{site.contact.stack}</li>
-      </ul>
+    <div class="mt-10 flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/60 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {new Date().getFullYear()} {site.legalName ?? site.displayName}. All rights reserved.</p>
+      <div class="flex gap-4">
+        {legalNav.map((item) => (
+          <a href={item.href} class="hover:underline">{item.label}</a>
+        ))}
+      </div>
     </div>
-  </div>
-
-  <div class="container footer__base">
-    <p>&copy; {year} {site.legalName}. All rights reserved.</p>
   </div>
 </footer>
-
-<style>
-  .footer {
-    background: var(--ink);
-    color: #c7cdd6;
-    padding-block: var(--space-6) var(--space-4);
-  }
-  .footer__grid {
-    display: grid;
-    gap: var(--space-5);
-  }
-  @media (min-width: 760px) {
-    .footer__grid { grid-template-columns: 1.5fr 1fr 1.5fr; }
-  }
-  .footer__name {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: #fff;
-  }
-  .footer__tag {
-    margin: var(--space-1) 0 var(--space-3);
-    color: #aab2bd;
-    max-width: 36ch;
-  }
-  .footer__h {
-    font-family: var(--font-head);
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #d8a86a;
-    margin-bottom: var(--space-2);
-  }
-  .footer__nav ul,
-  .footer__contact ul {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-  .footer a { color: #d6dbe2; }
-  .footer a:hover { color: #fff; }
-  .footer__stack { color: #8b94a1; font-size: var(--fs-small); }
-  .footer__base {
-    margin-top: var(--space-5);
-    padding-top: var(--space-3);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    font-size: var(--fs-small);
-    color: #8b94a1;
-  }
-</style>

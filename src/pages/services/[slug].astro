@@ -1,0 +1,153 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
+import Arc from "@/components/Arc.astro";
+import Button from "@/components/Button.astro";
+import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
+
+export async function getStaticPaths() {
+  const services = await getCollection("services");
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+const related = (
+  await Promise.all(service.data.related.map((slug: string) => getEntry("services", slug)))
+).filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "Services", path: "/services/" },
+  { name: service.data.title, path: `/services/${service.id}/` },
+];
+---
+
+<Base
+  title={service.data.seoTitle}
+  description={service.data.seoDescription}
+  path={`/services/${service.id}/`}
+  jsonLd={[
+    breadcrumbSchema(crumbs),
+    serviceSchema({
+      name: service.data.title,
+      description: service.data.summary,
+      path: `/services/${service.id}/`,
+    }),
+  ]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  {service.data.featured ? (
+    <section class="bg-spruce text-paper">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-2 md:items-center">
+        <div>
+          <span class="spec-tag text-blueline-ink">{service.data.specTag}</span>
+          <h1 class="mt-2 font-display text-h1 font-extrabold">{service.data.title}</h1>
+          <p class="mt-4 max-w-xl text-lede text-paper/80">{service.data.summary}</p>
+          <div class="mt-8">
+            <Button href="/quote/" variant="primary">Request a quote</Button>
+          </div>
+        </div>
+        <Arc />
+      </div>
+    </section>
+  ) : (
+    <section class="mx-auto max-w-6xl px-6 py-12">
+      <span class="spec-tag">{service.data.specTag}</span>
+      <h1 class="mt-2 font-display text-h1 font-extrabold">{service.data.title}</h1>
+      <p class="mt-4 max-w-2xl text-lede text-ink/75">{service.data.summary}</p>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-6 py-4">
+    <div class="max-w-3xl text-ink/85 [&>p]:mt-4 [&>p]:leading-relaxed">
+      <Content />
+    </div>
+  </section>
+
+  <div class="centerline mx-auto max-w-6xl mt-12"></div>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-h3 font-extrabold">Who this is for</h2>
+        <ul class="mt-4 space-y-2 text-ink/75">
+          {service.data.whoFor.map((item: string) => (
+            <li class="flex gap-2"><span class="text-blueline-ink" aria-hidden="true">—</span>{item}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-display text-h3 font-extrabold">The problem it removes</h2>
+        <p class="mt-4 text-ink/75">{service.data.problem}</p>
+      </div>
+    </div>
+  </section>
+
+  {service.data.featured && (
+    <section class="border-y border-ink/10 bg-paper/60 py-12">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="font-display text-h2 font-extrabold">How the drawing-to-parts workflow works here</h2>
+        <ol class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <li>
+            <span class="font-mono text-sm text-blueline-ink">01</span>
+            <h3 class="mt-1 font-display text-base font-extrabold">Send the opening</h3>
+            <p class="mt-2 text-sm text-ink/75">Architect's detail, a radius and springline, or a photo of the rough opening with a tape measure in frame.</p>
+          </li>
+          <li>
+            <span class="font-mono text-sm text-blueline-ink">02</span>
+            <h3 class="mt-1 font-display text-base font-extrabold">We draft the curve</h3>
+            <p class="mt-2 text-sm text-ink/75">A dimensioned shop drawing showing the exact radius comes back for your approval — nothing is cut before you sign off.</p>
+          </li>
+          <li>
+            <span class="font-mono text-sm text-blueline-ink">03</span>
+            <h3 class="mt-1 font-display text-base font-extrabold">We cut the curve</h3>
+            <p class="mt-2 text-sm text-ink/75">The CNC holds the radius exactly, every time — no drift between the first piece and the last.</p>
+          </li>
+          <li>
+            <span class="font-mono text-sm text-blueline-ink">04</span>
+            <h3 class="mt-1 font-display text-base font-extrabold">It drops into place</h3>
+            <p class="mt-2 text-sm text-ink/75">Parts arrive ready to install — no on-site scribing, no jigsaw, no second curve to match.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <h2 class="font-display text-h3 font-extrabold">What to send us</h2>
+    <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+      {service.data.whatToSend.map((item: string) => (
+        <li class="flex gap-2 text-ink/75"><span class="text-blueline-ink" aria-hidden="true">—</span>{item}</li>
+      ))}
+    </ul>
+    <p class="mt-4 font-mono text-xs text-ink/50">Files welcome: {service.data.specTag.includes("DXF") ? "DXF, DWG, PDF, or a photo" : "DXF, DWG, STEP, PDF, SKP, or a photo"}.</p>
+  </section>
+
+  {related.length > 0 && (
+    <section class="border-t border-ink/10 py-12">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="font-display text-h3 font-extrabold">Related services</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          {related.map((entry) => (
+            <ServiceCard
+              slug={entry.id}
+              title={entry.data.title}
+              summary={entry.data.summary}
+              specTag={entry.data.specTag}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <QuoteCtaBand heading={`Ready to quote your ${service.data.title.toLowerCase()}?`} />
+</Base>

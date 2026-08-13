@@ -1,44 +1,34 @@
 ---
-import { process } from '../content/site.ts';
----
-<ol class="steps">
+const steps = [
   {
-    process.map((s) => (
-      <li class="steps__item reveal">
-        <span class="steps__num">{String(s.step).padStart(2, '0')}</span>
-        <h3>{s.title}</h3>
-        <p>{s.blurb}</p>
-      </li>
-    ))
-  }
-</ol>
+    n: "01",
+    title: "Send your drawings",
+    body: "Architect's plans, a sketch, a DXF, or a photo of a napkin.",
+  },
+  {
+    n: "02",
+    title: "We draft it",
+    body: "A dimensioned shop drawing comes back for your approval.",
+  },
+  {
+    n: "03",
+    title: "Material sourced",
+    body: "We buy it, or you drop it off — either works.",
+  },
+  {
+    n: "04",
+    title: "Cut and ready",
+    body: "Parts finished to the approved drawing, on your schedule.",
+  },
+];
+---
 
-<style>
-  .steps {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-4);
-    counter-reset: step;
-  }
-  @media (min-width: 720px) {
-    .steps { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 980px) {
-    .steps { grid-template-columns: repeat(4, 1fr); }
-  }
-  .steps__item {
-    position: relative;
-    padding-top: var(--space-2);
-    border-top: 3px solid var(--brass-tint);
-  }
-  .steps__num {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--brass);
-    display: block;
-    margin-bottom: var(--space-1);
-  }
-  .steps__item h3 { margin-bottom: 0.35rem; }
-</style>
+<ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+  {steps.map((step) => (
+    <li class="flex flex-col gap-2">
+      <span class="font-mono text-sm text-blueline-ink">{step.n}</span>
+      <h3 class="font-display text-base font-extrabold">{step.title}</h3>
+      <p class="text-sm text-ink/75">{step.body}</p>
+    </li>
+  ))}
+</ol>

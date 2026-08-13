@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
+import { breadcrumbSchema } from "@/lib/schema";
+
+const crumbs = [{ name: "Home", path: "/" }, { name: "Projects", path: "/projects/" }];
+const projects = (await getCollection("projects")).filter((p) => !p.data.draft);
+---
+
+<Base
+  title="Projects | Goldsmith's Casework — Petoskey, MI"
+  description="A growing gallery of CNC-cut parts and shop drawings from Goldsmith's Casework: radius rafters, cabinet parts, wall paneling, and one-offs."
+  path="/projects/"
+  jsonLd={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <h1 class="font-display text-h1 font-extrabold">Projects</h1>
+    <p class="mt-4 max-w-2xl text-lede text-ink/75">
+      A running record of what's come off the machine. This gallery is new and will grow with every job — check back, or ask to see examples relevant to your project when you request a quote.
+    </p>
+
+    {projects.length > 0 ? (
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <article class="border border-ink/15 p-6">
+            <h2 class="font-display text-base font-extrabold">{project.data.title}</h2>
+            <p class="mt-2 text-sm text-ink/70">{project.data.summary}</p>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="mt-10 border border-dashed border-ink/25 p-10 text-center">
+        <p class="font-mono text-sm text-ink/60">[ Gallery photos coming soon ]</p>
+        <p class="mt-2 text-ink/70">
+          We're building this out as jobs are completed. In the meantime, see what we cut on the
+          <a href="/services/" class="text-blueline-ink hover:underline"> services page</a>, or
+          <a href="/quote/" class="text-blueline-ink hover:underline"> request a quote</a> to talk through your project directly.
+        </p>
+      </div>
+    )}
+  </section>
+
+  <QuoteCtaBand />
+</Base>

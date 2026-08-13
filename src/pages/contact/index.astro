@@ -1,0 +1,62 @@
+---
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import Button from "@/components/Button.astro";
+import PhoneLink from "@/components/PhoneLink.astro";
+import { site } from "@/config/site";
+import { isDev } from "@/lib/placeholder";
+import { breadcrumbSchema } from "@/lib/schema";
+
+const crumbs = [{ name: "Home", path: "/" }, { name: "Contact", path: "/contact/" }];
+---
+
+<Base
+  title="Contact | Goldsmith's Casework — Petoskey, MI"
+  description="Reach Goldsmith's Casework by phone or email. For a project quote with file upload, use the Request a Quote page instead."
+  path="/contact/"
+  jsonLd={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-4xl px-6 py-12">
+    <h1 class="font-display text-h1 font-extrabold">Contact</h1>
+    <p class="mt-4 max-w-xl text-lede text-ink/75">
+      Have a project ready to quote? <a href="/quote/" class="text-blueline-ink hover:underline">Use the quote form</a> — it takes file uploads.
+      For anything else — consulting, a general question, following up on a job — reach us directly.
+    </p>
+
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      {(site.phone || isDev) && (
+        <div class="border border-ink/15 p-6">
+          <p class="spec-tag">Phone</p>
+          <p class="mt-2 text-lg"><PhoneLink /></p>
+        </div>
+      )}
+      <div class="border border-ink/15 p-6">
+        <p class="spec-tag">Email</p>
+        <p class="mt-2 text-lg">
+          {site.email ? (
+            <a href={`mailto:${site.email}`} class="hover:text-blueline-ink">{site.email}</a>
+          ) : isDev ? (
+            <span class="text-amber">[TODO: email]</span>
+          ) : (
+            <Button href="/quote/" variant="ghost" class="text-sm">Use the quote form</Button>
+          )}
+        </p>
+      </div>
+      <div class="border border-ink/15 p-6">
+        <p class="spec-tag">Studio location</p>
+        <p class="mt-2">
+          {site.address.showStreetAddress && site.address.street ? `${site.address.street}, ` : ""}
+          {site.address.city}, {site.address.state}{site.address.zip ? ` ${site.address.zip}` : ""}
+          <br />
+          <span class="text-sm text-ink/60">US-based — work done {site.serviceRadiusNote} for fabrication, nationwide for consulting.</span>
+        </p>
+      </div>
+      <div class="border border-ink/15 p-6">
+        <p class="spec-tag">Working software</p>
+        <p class="mt-2 font-mono text-sm">Microvellum / Toolbox · Fusion 360 · AutoCAD · BricsCAD</p>
+      </div>
+    </div>
+  </section>
+</Base>

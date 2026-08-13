@@ -1,0 +1,22 @@
+---
+// Tap-to-call link, sourced entirely from site.ts. If the real number isn't
+// set yet, show a dev-only placeholder and render nothing in production —
+// never fabricate a phone number.
+import { site } from "@/config/site";
+import { isDev } from "@/lib/placeholder";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+{site.phone && site.phoneHref ? (
+  <a href={site.phoneHref} class={`spec-tag no-underline ${className}`}>
+    {site.phone}
+  </a>
+) : isDev ? (
+  <span class={`spec-tag text-amber ${className}`} title="Set site.phone / site.phoneHref in src/config/site.ts">
+    [TODO: phone number]
+  </span>
+) : null}

@@ -1,44 +1,44 @@
-# Goldsmith Casework Co. — Website
+# Goldsmith's Casework — Website
 
-Marketing site for **Goldsmith Casework Co. LLC** — Microvellum drafting & engineering for cabinet and millwork shops. Built with [Astro](https://astro.build): a fast, multi-page static site that ships almost no JavaScript.
+Marketing site for **Goldsmith's Casework** — custom CNC fabrication and shop drawings for builders in Northern Michigan, plus CNC/CAD workflow consulting nationwide. Built with [Astro](https://astro.build) and Tailwind CSS: a fast, multi-page static site that ships almost no JavaScript.
 
 ---
 
 ## Editing content (no coding needed)
 
-**Almost everything you'll want to change lives in one file:**
+**Every business fact on the site lives in one file:**
 
 ```
-src/content/site.ts
+src/config/site.ts
 ```
 
-Open it and edit the text between the quotes. It holds:
+Open it and edit the values. It holds:
 
-- Business name, tagline, and SEO description
-- **Contact details** — email, phone, location, software stack line
-- The **services** list (add/reorder by editing the array)
-- The **"How it works"** steps and **"Why Goldsmith"** points
-- The **Work / portfolio** items
-- The **FAQ** questions and answers
-- The quote-form dropdown options
-- Empty slots for **testimonials, client logos, and credentials** — add items and those sections appear automatically
+- Business name, tagline
+- **Contact details** — phone, email, address, hours, service area, insurance
+- **Machine specs** — cutting area, material thickness, tolerance
+- Materials and file formats the shop accepts
+- The form submission endpoint (see "The quote form" below)
 
-After editing, save the file. If the preview is running you'll see changes instantly.
+Fields left as `null` are things nobody has confirmed yet (a real phone number, for instance). The site is written to **never guess** at these — while a field is `null`, the site quietly hides whatever depends on it (or shows a `[TODO: ...]` marker, but only when you run it locally in dev mode; that marker never appears on the live site). Fill in a value and it appears everywhere automatically — header, footer, every page that mentions it.
 
-### Things marked PLACEHOLDER — confirm before launch
-Search the project for the word `PLACEHOLDER`. The main ones:
-- **Email** `brandon@goldsmithcasework.com` — confirm or change in `src/content/site.ts`.
-- **Phone** `(000) 000-0000` — put a real number, or set `phone` to `null` to hide it everywhere.
-- **Domain** `goldsmithcasework.com` — set in `src/content/site.ts` and `astro.config.mjs`.
+### Editing the services
 
-### Swapping the placeholder images
-The diagonal-striped images are placeholders in `public/images/` (and `public/images/work/`).
-To use a real photo or drawing:
-1. Drop your image file into `public/images/` (e.g. `hero.jpg`).
-2. Update the matching path — hero/portrait paths are in the page files (`src/components/Hero.astro`, `src/pages/about.astro`); work images are in `src/content/site.ts`.
-JPG, PNG, WebP, AVIF, and SVG all work. Keep the descriptive `alt` text accurate.
+The six service pages (Radius & Curved Components, Cabinet & Casework Parts, etc.) are Markdown files in:
 
-The favicon and social-share image are `public/favicon.svg` and `public/images/og-placeholder.svg` — replace these once final artwork exists.
+```
+src/content/services/
+```
+
+Each file has a block of details at the top (`whoFor`, `problem`, `whatToSend`, etc.) and the main description as plain text below. Edit either. To add a new service, copy one of these files, give it a new filename (that becomes its URL), and fill in its details — it'll show up on the Services page and homepage automatically.
+
+### Adding project photos
+
+```
+src/content/projects/
+```
+
+is currently empty — the Projects page shows a "coming soon" message until files are added here. To add a project, create a Markdown file with a title and short summary (follow the pattern in `src/content/config.ts`).
 
 ---
 
@@ -60,25 +60,48 @@ npm run preview    # preview that finished build locally
 
 ---
 
-## Publishing it (Netlify)
+## Before this goes live — a checklist
 
-The site is set up to deploy on **Netlify**, connected to this GitHub repository.
+Everything below is a placeholder in `src/config/site.ts` today. None of it is guessed — confirm each one before launch:
 
-1. Sign in to [Netlify](https://www.netlify.com) and choose **Add new site → Import an existing project**.
-2. Connect this GitHub repository.
-3. Netlify reads `netlify.toml` automatically — build command `npm run build`, publish directory `dist`. Just click **Deploy**.
-4. Every time changes are pushed to the production branch, Netlify rebuilds and publishes automatically.
+- [ ] **Phone number** (`phone` / `phoneHref`) — the primary audience is on job sites; this needs to be real and correct.
+- [ ] **Email** (`email`)
+- [ ] **Domain** (`domain`) — also update `astro.config.mjs`'s fallback and `public/robots.txt`.
+- [ ] **Address details** (`address.zip`, `address.street` if it should be public)
+- [ ] **Hours** (`hours`)
+- [ ] **Insurance status** (`insured`) — matters to GCs
+- [ ] **Machine specs** (`machine.*`) — cutting area, max thickness, tolerance, make/model
+- [ ] **Quote form endpoint** (`formEndpoint`) — see below
+- [ ] Real Open Graph / social share image (currently a placeholder SVG at `public/images/og-default.svg`)
+- [ ] A real logo (currently a text wordmark)
 
-### Custom domain
-In Netlify: **Domain settings → Add a domain** → enter `goldsmithcasework.com` and follow the DNS steps Netlify shows you.
+## The quote form
 
-### The contact / quote form
-The form uses **Netlify Forms** — no extra setup or account needed. Once the site is live on Netlify:
-- Submissions appear under **Forms** in your Netlify dashboard (the form is named `quote`).
-- Turn on email notifications: **Site settings → Forms → Form notifications → Add notification → Email**, and enter the address that should receive leads.
-- A hidden honeypot field filters basic spam automatically.
+The `/quote/` and other forms POST to whatever URL is set as `formEndpoint` in `src/config/site.ts`. Until that's set, forms still render and validate, but show a message asking visitors to email you directly instead of failing silently.
 
-Submitting the form sends visitors to the **Thank-you** page (`/thanks`).
+Two services work with zero backend, and either is a straightforward account signup:
+
+- **[Web3Forms](https://web3forms.com)** — free, supports file uploads, no account needed beyond an access key sent to your email. Set `formEndpoint` to `https://api.web3forms.com/submit` and add your access key as a hidden field in `src/components/QuoteForm.astro`, or follow Web3Forms' docs for passing the key another way.
+- **[Formspree](https://formspree.io)** — free tier, supports file uploads. Set `formEndpoint` to the form URL Formspree gives you (`https://formspree.io/f/xxxxxxx`).
+
+The integration point is a single function in `src/lib/forms.ts` — swapping providers, or moving to a custom backend later, means changing that one file.
+
+A honeypot field filters basic spam automatically.
+
+---
+
+## Deploying
+
+Built for **[Vercel](https://vercel.com)**, but the output is a plain static site (`npm run build` → `dist/`) that works on any static host (Netlify, Cloudflare Pages, GitHub Pages, etc.) with no server runtime required.
+
+### Vercel
+1. Sign in to Vercel and **Import Project** from this GitHub repository.
+2. Vercel auto-detects Astro — build command `astro build`, output directory `dist`. Click **Deploy**.
+3. **Settings → Domains** → add your domain and follow the DNS steps Vercel shows you.
+4. Every push to the production branch redeploys automatically.
+
+### GitHub Pages preview
+`.github/workflows/deploy-pages.yml` builds and publishes a preview to GitHub Pages on push, so a pull request's changes can be reviewed at a live URL before merging to `main`. This is a preview convenience only — the real deploy target is Vercel (or whatever static host you choose).
 
 ---
 
@@ -86,17 +109,25 @@ Submitting the form sends visitors to the **Thank-you** page (`/thanks`).
 
 ```
 src/
-  content/site.ts     ← all editable text & data (start here)
-  styles/             ← colors, fonts, spacing (tokens.css) and base styles
-  components/         ← reusable building blocks (header, footer, cards, form…)
-  layouts/Base.astro  ← the page shell (head tags, header, footer)
-  pages/              ← one file per page: index, services, work, about, faq, contact
-public/               ← images, favicon, robots.txt (served as-is)
+  config/site.ts       ← all business facts (start here)
+  content/
+    services/           ← one Markdown file per service
+    projects/            ← project gallery entries (empty until photos exist)
+    posts/                ← blog, scaffolded and empty
+    config.ts            ← content collection schemas
+  styles/global.css    ← design tokens (palette, type scale), Tailwind config
+  components/          ← reusable building blocks (header, footer, arc graphic, form…)
+  layouts/Base.astro   ← the page shell (head tags, header, footer)
+  lib/                 ← shared helpers (nav links, JSON-LD schema, form submission)
+  pages/                ← one file/folder per route
+public/                 ← favicon, robots.txt, placeholder images (served as-is)
 ```
 
 ---
 
 ## Notes
-- Fonts (Inter + Sora) are **self-hosted** — no Google Fonts request, faster and private.
-- The site is fully responsive, keyboard-accessible, and respects "reduce motion" settings.
-- SEO: per-page titles/descriptions, a sitemap, and structured data are generated automatically.
+
+- Fonts (Archivo, IBM Plex Sans, IBM Plex Mono) are **self-hosted** via Fontsource — no Google Fonts request.
+- The site is fully responsive (360px and up), keyboard-accessible, and respects "reduce motion" settings.
+- SEO: per-page titles/descriptions, a sitemap (`sitemap-index.xml`, generated automatically), and `LocalBusiness`/`Service`/`BreadcrumbList` structured data are wired up — all populated from `src/config/site.ts`.
+- No testimonials, client names, project counts, or years-in-business claims appear anywhere — none were supplied, and the site doesn't invent them. A commented placeholder in `src/pages/index.astro` marks where testimonials can go once there are real ones.

@@ -1,123 +1,258 @@
 ---
-import { quoteForm } from '../content/site.ts';
-import { link } from '../lib/links.ts';
-const f = quoteForm.fields;
+import { site } from "@/config/site";
+
+interface Props {
+  projectTypes: { slug: string; title: string }[];
+}
+const { projectTypes } = Astro.props;
 ---
-<form
-  name="quote"
-  method="POST"
-  data-netlify="true"
-  netlify-honeypot="bot-field"
-  action={link('/thanks')}
-  class="quote-form"
->
-  <!-- Netlify needs this hidden input to match the form name on submit. -->
-  <input type="hidden" name="form-name" value="quote" />
-  <!-- Honeypot field (hidden from humans) for spam protection. -->
-  <p class="hp">
-    <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
-  </p>
 
-  <div class="quote-form__row">
-    <div class="field">
-      <label for="name">Name <span aria-hidden="true">*</span></label>
-      <input id="name" name="name" type="text" required autocomplete="name" />
-    </div>
-    <div class="field">
-      <label for="company">Shop / company</label>
-      <input id="company" name="company" type="text" autocomplete="organization" />
-    </div>
+<form id="quote-form" novalidate class="mt-10 space-y-6" aria-describedby="form-status">
+  <!-- Honeypot — hidden from sighted users and screen readers, real users never fill it -->
+  <div class="hidden" aria-hidden="true">
+    <label for="website">Leave this field blank</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
   </div>
 
-  <div class="quote-form__row">
-    <div class="field">
-      <label for="email">Email <span aria-hidden="true">*</span></label>
-      <input id="email" name="email" type="email" required autocomplete="email" />
+  <div class="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label for="name" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Name *</label>
+      <input id="name" name="name" type="text" required class="field" aria-describedby="name-error" />
+      <p id="name-error" class="field-error" role="alert"></p>
     </div>
-    <div class="field">
-      <label for="phone">Phone</label>
-      <input id="phone" name="phone" type="tel" autocomplete="tel" />
-    </div>
-  </div>
 
-  <div class="quote-form__row">
-    <div class="field">
-      <label for="software">Software</label>
-      <select id="software" name="software">
-        <option value="">Select…</option>
-        {f.software.map((o) => (<option value={o}>{o}</option>))}
+    <div>
+      <label for="company" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Company</label>
+      <input id="company" name="company" type="text" class="field" />
+    </div>
+
+    <div>
+      <label for="phone" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Phone *</label>
+      <input id="phone" name="phone" type="tel" required class="field" aria-describedby="phone-error" />
+      <p id="phone-error" class="field-error" role="alert"></p>
+    </div>
+
+    <div>
+      <label for="email" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Email *</label>
+      <input id="email" name="email" type="email" required class="field" aria-describedby="email-error" />
+      <p id="email-error" class="field-error" role="alert"></p>
+    </div>
+
+    <div>
+      <label for="projectType" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Project type *</label>
+      <select id="projectType" name="projectType" required class="field" aria-describedby="projectType-error">
+        <option value="">Select one</option>
+        {projectTypes.map((p) => <option value={p.title}>{p.title}</option>)}
+        <option value="Not sure / something else">Not sure / something else</option>
       </select>
+      <p id="projectType-error" class="field-error" role="alert"></p>
     </div>
-    <div class="field">
-      <label for="projectType">Project type</label>
-      <select id="projectType" name="project_type">
-        <option value="">Select…</option>
-        {f.projectType.map((o) => (<option value={o}>{o}</option>))}
-      </select>
+
+    <div>
+      <label for="targetDate" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Target date</label>
+      <input id="targetDate" name="targetDate" type="date" class="field" />
     </div>
   </div>
 
-  <div class="quote-form__row">
-    <div class="field">
-      <label for="scope">Scope</label>
-      <select id="scope" name="scope">
-        <option value="">Select…</option>
-        {f.scope.map((o) => (<option value={o}>{o}</option>))}
-      </select>
-    </div>
-    <div class="field">
-      <label for="timeline">Timeline</label>
-      <select id="timeline" name="timeline">
-        <option value="">Select…</option>
-        {f.timeline.map((o) => (<option value={o}>{o}</option>))}
-      </select>
-    </div>
+  <div>
+    <label for="description" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Project description *</label>
+    <textarea id="description" name="description" rows="5" required class="field" aria-describedby="description-error"></textarea>
+    <p id="description-error" class="field-error" role="alert"></p>
   </div>
 
-  <div class="field">
-    <label for="message">Tell us about your project <span aria-hidden="true">*</span></label>
-    <textarea id="message" name="message" rows="5" required></textarea>
+  <fieldset>
+    <legend class="font-mono text-xs uppercase tracking-wide text-ink/70">Material *</legend>
+    <div class="mt-2 flex flex-col gap-2 sm:flex-row sm:gap-6">
+      <label class="flex items-center gap-2 text-sm">
+        <input type="radio" name="material" value="I have material" required />
+        I have material
+      </label>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="radio" name="material" value="Please source it" required />
+        Please source it
+      </label>
+    </div>
+    <p id="material-error" class="field-error" role="alert"></p>
+  </fieldset>
+
+  <div>
+    <label for="files" class="block font-mono text-xs uppercase tracking-wide text-ink/70">Files</label>
+    <input
+      id="files"
+      name="files"
+      type="file"
+      multiple
+      accept=".pdf,.dxf,.dwg,.jpg,.jpeg,.png"
+      class="field file:mr-4 file:border-0 file:bg-ink file:px-3 file:py-2 file:font-mono file:text-xs file:text-paper"
+    />
+    {site.email ? (
+      <p class="mt-2 text-xs text-ink/60">
+        Large plan sets? Email them to <a href={`mailto:${site.email}`} class="text-blueline-ink hover:underline">{site.email}</a> and reference your name.
+      </p>
+    ) : null}
   </div>
 
-  <button type="submit" class="btn btn--primary">Send request</button>
+  <div>
+    <label for="referral" class="block font-mono text-xs uppercase tracking-wide text-ink/70">How did you find us?</label>
+    <input id="referral" name="referral" type="text" class="field" />
+  </div>
+
+  <div id="form-status" class="hidden" role="alert"></div>
+
+  <button
+    type="submit"
+    id="submit-button"
+    class="inline-flex items-center justify-center rounded-sm bg-amber px-8 py-3 font-display text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:bg-amber/90 disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    Send request
+  </button>
 </form>
 
+<div id="quote-success" class="hidden" tabindex="-1">
+  <div class="border border-blueline bg-blueline/10 p-8">
+    <h2 class="font-display text-h3 font-extrabold text-spruce">Request received</h2>
+    <p class="mt-2 text-ink/75" id="quote-success-message">
+      Thanks — we've got your project details and will be in touch.
+    </p>
+  </div>
+</div>
+
 <style>
-  .quote-form { display: grid; gap: var(--space-3); }
-  .quote-form__row {
-    display: grid;
-    gap: var(--space-3);
-  }
-  @media (min-width: 600px) {
-    .quote-form__row { grid-template-columns: 1fr 1fr; }
-  }
-  .field { display: grid; gap: 0.35rem; }
-  label {
-    font-family: var(--font-head);
-    font-weight: 500;
-    font-size: var(--fs-small);
-    color: var(--ink);
-  }
-  label span { color: var(--brass-dark); }
-  input,
-  select,
-  textarea {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--ink);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    padding: 0.7rem 0.8rem;
+  .field {
+    margin-top: 0.35rem;
     width: 100%;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent);
+    background: var(--color-paper);
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-body);
+    border-radius: var(--radius-DEFAULT);
   }
-  input:focus,
-  select:focus,
-  textarea:focus {
-    border-color: var(--brass);
+  .field:focus-visible {
+    outline: 2px solid var(--color-blueline);
     outline-offset: 1px;
   }
-  textarea { resize: vertical; }
-  .hp { position: absolute; left: -9999px; }
-  .quote-form .btn { justify-self: start; }
+  .field[aria-invalid="true"] {
+    border-color: #b3261e;
+  }
+  .field-error {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: #b3261e;
+    min-height: 1rem;
+  }
 </style>
+
+<script>
+  const form = document.getElementById("quote-form") as HTMLFormElement | null;
+  const successPanel = document.getElementById("quote-success");
+  const statusBox = document.getElementById("form-status");
+  const submitButton = document.getElementById("submit-button") as HTMLButtonElement | null;
+
+  if (form && successPanel && statusBox && submitButton) {
+    const requiredFields: { id: string; message: string; validate?: (value: string) => boolean }[] = [
+      { id: "name", message: "Enter your name." },
+      { id: "phone", message: "Enter a phone number so we can reach you." },
+      {
+        id: "email",
+        message: "Enter a valid email address.",
+        validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+      },
+      { id: "projectType", message: "Select a project type." },
+      {
+        id: "description",
+        message: "Add a few sentences about the project (at least 10 characters).",
+        validate: (v) => v.trim().length >= 10,
+      },
+    ];
+
+    function setFieldError(id: string, message: string) {
+      const field = document.getElementById(id);
+      const errorEl = document.getElementById(`${id}-error`);
+      if (!field || !errorEl) return;
+      if (message) {
+        field.setAttribute("aria-invalid", "true");
+        errorEl.textContent = message;
+      } else {
+        field.removeAttribute("aria-invalid");
+        errorEl.textContent = "";
+      }
+    }
+
+    function validate(): boolean {
+      let firstInvalid: HTMLElement | null = null;
+      let valid = true;
+
+      for (const rule of requiredFields) {
+        const field = document.getElementById(rule.id) as
+          | HTMLInputElement
+          | HTMLSelectElement
+          | HTMLTextAreaElement
+          | null;
+        if (!field) continue;
+        const value = field.value.trim();
+        const isEmpty = value.length === 0;
+        const failsCustom = rule.validate ? !rule.validate(value) : false;
+
+        if (isEmpty || failsCustom) {
+          setFieldError(rule.id, rule.message);
+          valid = false;
+          firstInvalid ??= field;
+        } else {
+          setFieldError(rule.id, "");
+        }
+      }
+
+      const materialChecked = form?.querySelector<HTMLInputElement>('input[name="material"]:checked');
+      const materialError = document.getElementById("material-error");
+      if (!materialChecked) {
+        if (materialError) materialError.textContent = "Choose one.";
+        valid = false;
+        firstInvalid ??= form?.querySelector('input[name="material"]') ?? null;
+      } else if (materialError) {
+        materialError.textContent = "";
+      }
+
+      firstInvalid?.focus();
+      return valid;
+    }
+
+    // Clear a field's error as soon as the visitor fixes it.
+    for (const rule of requiredFields) {
+      document.getElementById(rule.id)?.addEventListener("input", () => setFieldError(rule.id, ""));
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Honeypot: if this hidden field has a value, silently drop the submission.
+      const honeypot = (form.elements.namedItem("website") as HTMLInputElement | null)?.value;
+      if (honeypot) return;
+
+      if (!validate()) return;
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending…";
+      statusBox.classList.add("hidden");
+
+      try {
+        const { submitForm } = await import("@/lib/forms");
+        const formData = new FormData(form);
+        const result = await submitForm(formData);
+
+        if (result.ok) {
+          form.classList.add("hidden");
+          successPanel?.classList.remove("hidden");
+          const successMessage = document.getElementById("quote-success-message");
+          if (successMessage) successMessage.textContent = result.message;
+          successPanel?.focus();
+        } else {
+          statusBox.textContent = result.message;
+          statusBox.classList.remove("hidden");
+        }
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send request";
+      }
+    });
+  }
+</script>

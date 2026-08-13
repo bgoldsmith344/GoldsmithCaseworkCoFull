@@ -1,0 +1,39 @@
+---
+import { site } from "@/config/site";
+import { isDev } from "@/lib/placeholder";
+
+const machineFacts = [
+  { label: "Cutting area", value: site.machine.cuttingArea },
+  { label: "Max thickness", value: site.machine.maxMaterialThickness },
+  { label: "Tolerance", value: site.machine.tolerance },
+];
+---
+
+<div class="grid gap-10 md:grid-cols-3">
+  <div>
+    <p class="spec-tag">Machine envelope</p>
+    <ul class="mt-3 space-y-1.5 font-mono text-sm">
+      {machineFacts.map((fact) =>
+        fact.value ? (
+          <li>{fact.label}: {fact.value}</li>
+        ) : isDev ? (
+          <li class="text-amber">{fact.label}: [TODO]</li>
+        ) : null
+      )}
+    </ul>
+  </div>
+
+  <div>
+    <p class="spec-tag">Materials</p>
+    <ul class="mt-3 space-y-1.5 font-mono text-sm">
+      {site.materials.map((m) => <li>{m}</li>)}
+    </ul>
+  </div>
+
+  <div>
+    <p class="spec-tag">File formats</p>
+    <ul class="mt-3 space-y-1.5 font-mono text-sm">
+      {site.fileFormats.map((f) => <li>{f}</li>)}
+    </ul>
+  </div>
+</div>

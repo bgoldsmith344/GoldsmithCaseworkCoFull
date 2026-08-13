@@ -1,0 +1,63 @@
+---
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CapabilitiesStrip from "@/components/CapabilitiesStrip.astro";
+import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
+import { site } from "@/config/site";
+import { isDev } from "@/lib/placeholder";
+import { breadcrumbSchema } from "@/lib/schema";
+
+const crumbs = [{ name: "Home", path: "/" }, { name: "Capabilities", path: "/capabilities/" }];
+---
+
+<Base
+  title="Machine Capabilities & Specs | Goldsmith's Casework"
+  description="Cutting area, material thickness, tolerance, materials, and file formats for CNC-cut parts from Goldsmith's Casework in Petoskey, MI."
+  path="/capabilities/"
+  jsonLd={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <h1 class="font-display text-h1 font-extrabold">Capabilities</h1>
+    <p class="mt-4 max-w-2xl text-lede text-ink/75">
+      What the machine can hold, what it cuts, and what we need from you to get a part right the first time.
+    </p>
+
+    <div class="mt-12 border border-ink/15 p-8">
+      <CapabilitiesStrip />
+    </div>
+
+    <div class="mt-12 grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-h3 font-extrabold">Insurance</h2>
+        <p class="mt-3 text-ink/75">
+          {site.insured === true
+            ? "We carry insurance for work on and off site — ask for a certificate if your job requires one."
+            : site.insured === false
+              ? "We currently don't carry a commercial policy. If your job requires proof of insurance, let us know before you quote the work."
+              : isDev
+                ? "[TODO: confirm insurance status in src/config/site.ts]"
+                : "Ask about insurance requirements for your project."}
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-h3 font-extrabold">Hours</h2>
+        <p class="mt-3 text-ink/75">
+          {site.hours ?? (isDev ? "[TODO: set hours in src/config/site.ts]" : "Contact us for current turnaround.")}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="font-display text-h3 font-extrabold">Getting a file that cuts clean</h2>
+      <ul class="mt-4 space-y-2 text-ink/75">
+        <li class="flex gap-2"><span class="text-blueline-ink" aria-hidden="true">—</span>Vector files (DXF/DWG/STEP) cut fastest — closed geometry, real units, one part per layer or file where possible.</li>
+        <li class="flex gap-2"><span class="text-blueline-ink" aria-hidden="true">—</span>No file yet is fine. A dimensioned sketch or a photo with a tape measure in frame gets a job started just as well.</li>
+        <li class="flex gap-2"><span class="text-blueline-ink" aria-hidden="true">—</span>Every job gets a shop drawing back for approval before we cut, regardless of what you send us.</li>
+      </ul>
+    </div>
+  </section>
+
+  <QuoteCtaBand />
+</Base>

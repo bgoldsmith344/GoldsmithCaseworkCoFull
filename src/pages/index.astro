@@ -1,120 +1,132 @@
 ---
-import Base from '../layouts/Base.astro';
-import Hero from '../components/Hero.astro';
-import ServiceCard from '../components/ServiceCard.astro';
-import ProcessSteps from '../components/ProcessSteps.astro';
-import WhyGoldsmith from '../components/WhyGoldsmith.astro';
-import WorkCard from '../components/WorkCard.astro';
-import CheckList from '../components/CheckList.astro';
-import Testimonials from '../components/Testimonials.astro';
-import ClientLogos from '../components/ClientLogos.astro';
-import ContactCTA from '../components/ContactCTA.astro';
-import Button from '../components/Button.astro';
-import { home, services, work } from '../content/site.ts';
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import Arc from "@/components/Arc.astro";
+import Button from "@/components/Button.astro";
+import ProcessSteps from "@/components/ProcessSteps.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import CapabilitiesStrip from "@/components/CapabilitiesStrip.astro";
+import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
+import PhoneLink from "@/components/PhoneLink.astro";
+import { site } from "@/config/site";
+import { localBusinessSchema } from "@/lib/schema";
 
-const workHighlights = work.items.slice(0, 3);
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+
+const reasons = [
+  {
+    label: "Time",
+    body: "A radius header that takes a day to hand-cut and fit on site takes minutes on the machine. The fitting happens before the parts ever leave the shop, not while your crew waits.",
+  },
+  {
+    label: "Waste",
+    body: "Parts are nested on the sheet before anything is cut, so material use is planned instead of guessed at with a tape measure and a pencil line.",
+  },
+  {
+    label: "Accuracy",
+    body: "Every part comes off the same file. The tenth piece matches the first — no drift from one hand-cut curve to the next.",
+  },
+];
 ---
+
 <Base
-  title="Microvellum Drafting & Engineering Service"
-  description={home.hero.subline}
+  title="Custom CNC Cutting & Shop Drawings | Goldsmith's Casework — Petoskey, MI"
+  description="Send us your architect's drawing or a rough sketch. We draft a shop drawing for your approval, then CNC-cut the parts — radius rafters, cabinet parts, wall paneling, and one-offs — ready to install."
+  path="/"
+  jsonLd={[localBusinessSchema()]}
 >
-  <Hero />
-
-  <!-- What we do -->
-  <section class="section">
-    <div class="container narrow stack" style="text-align:center; justify-items:center; display:grid;">
-      <p class="eyebrow">{home.whatWeDo.title}</p>
-      <h2>We take the drafting off your plate</h2>
-      <p class="lead">{home.whatWeDo.body}</p>
-      <Button href={home.whatWeDo.cta.href} variant="primary">{home.whatWeDo.cta.label}</Button>
-    </div>
-  </section>
-
-  <!-- Services teaser -->
-  <section class="section section--paper">
-    <div class="container">
-      <p class="eyebrow">{home.servicesTeaser.title}</p>
-      <h2>{home.servicesTeaser.intro}</h2>
-      <div class="grid grid--3" style="margin-top: var(--space-4)">
-        {services.map((s) => (
-          <ServiceCard title={s.title} summary={s.summary} icon={s.icon} href={`/services#${s.slug}`} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow">How it works</p>
-      <h2>A simple, low-risk hand-off</h2>
-      <div style="margin-top: var(--space-4)"><ProcessSteps /></div>
-    </div>
-  </section>
-
-  <!-- Why Goldsmith -->
-  <section class="section section--ink">
-    <div class="container">
-      <p class="eyebrow">Why Goldsmith</p>
-      <h2>The difference a US-based specialist makes</h2>
-      <div style="margin-top: var(--space-4)"><WhyGoldsmith /></div>
-    </div>
-  </section>
-
-  <!-- Work highlights -->
-  <section class="section section--paper">
-    <div class="container">
-      <div class="work-head">
-        <div>
-          <p class="eyebrow">Our work</p>
-          <h2>Drawings built to your standards</h2>
+  <section class="bg-spruce text-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-24">
+      <div>
+        <h1 class="font-display text-hero font-extrabold">Send us the print. We'll send back the parts.</h1>
+        <p class="mt-5 max-w-xl text-lede text-paper/80">{site.tagline} Radius arch rafters, cabinet parts, wall paneling, and one-off components — cut to the drawing, ready to install.</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/quote/" variant="primary">Request a quote</Button>
+          <Button href="/projects/" variant="ghost" class="border-paper/40 text-paper hover:bg-paper hover:text-ink">See what we cut</Button>
         </div>
-        <Button href="/work" variant="secondary">See all work</Button>
       </div>
-      <div class="grid grid--3" style="margin-top: var(--space-4)">
-        {workHighlights.map((w) => (
-          <WorkCard title={w.title} category={w.category} image={w.image} alt={w.alt} caption={w.caption} />
+      <Arc />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <h2 class="font-display text-h2 font-extrabold">How it works</h2>
+    <p class="mt-2 max-w-2xl text-ink/70">Four steps, in order — no surprises between the drawing and the parts on your truck.</p>
+    <div class="mt-10">
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <div class="centerline mx-auto max-w-6xl"></div>
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 class="font-display text-h2 font-extrabold">What we cut</h2>
+      <a href="/services/" class="font-mono text-sm text-blueline-ink hover:underline">All services &rarr;</a>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <ServiceCard
+          slug={service.id}
+          title={service.data.title}
+          summary={service.data.summary}
+          specTag={service.data.specTag}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper/60 border-y border-ink/10 py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="font-display text-h2 font-extrabold">Why it beats cutting on site</h2>
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        {reasons.map((reason) => (
+          <div>
+            <p class="spec-tag">{reason.label}</p>
+            <p class="mt-2 text-sm text-ink/75">{reason.body}</p>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- About teaser -->
-  <section class="section">
-    <div class="container narrow stack">
-      <p class="eyebrow">About</p>
-      <h2>{home.aboutTeaser.title}</h2>
-      <p class="lead">{home.aboutTeaser.body}</p>
-      <Button href={home.aboutTeaser.cta.href} variant="secondary">{home.aboutTeaser.cta.label}</Button>
-    </div>
-  </section>
-
-  <!-- Count on us / checklist -->
-  <section class="section section--wood">
-    <div class="container">
-      <p class="eyebrow">{home.checklist.title}</p>
-      <h2>What you can expect, every run</h2>
-      <div style="margin-top: var(--space-4)"><CheckList items={home.checklist.items} /></div>
-    </div>
-  </section>
-
-  <Testimonials />
-  <ClientLogos />
-
-  <ContactCTA
-    title={home.contactBand.title}
-    label={home.contactBand.cta.label}
-    href={home.contactBand.cta.href}
-    text="Tell us about your next project and we'll get back to you with a quote."
-  />
-</Base>
-
-<style>
-  .work-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-3);
+  {
+    /*
+      TESTIMONIALS: no client names, quotes, project counts, or years-in-business
+      claims have been supplied, so none are written here. When Brandon has real
+      testimonials to share, a simple 2-3 quote block fits here, between the
+      "why it beats cutting on site" section and Capabilities.
+    */
   }
-</style>
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <h2 class="font-display text-h2 font-extrabold">Capabilities</h2>
+    <div class="mt-10">
+      <CapabilitiesStrip />
+    </div>
+    <a href="/capabilities/" class="mt-6 inline-block font-mono text-sm text-blueline-ink hover:underline">Full specs &rarr;</a>
+  </section>
+
+  <div class="centerline mx-auto max-w-6xl"></div>
+
+  <section class="mx-auto max-w-6xl px-6 py-16">
+    <h2 class="font-display text-h2 font-extrabold">Serving Northern Michigan</h2>
+    <p class="mt-4 max-w-3xl text-ink/75">
+      We're based in {site.address.city}, {site.address.state}, and work with builders and shops {site.serviceRadiusNote} —
+      {site.serviceArea.join(", ")}, and the towns between them. If you're outside that range and the job is worth the drive, ask; drawings travel by email regardless of where the parts get installed.
+    </p>
+  </section>
+
+  <section class="bg-spruce/5 border-y border-ink/10 py-16">
+    <div class="mx-auto max-w-4xl px-6">
+      <p class="spec-tag">Consulting</p>
+      <h2 class="mt-2 font-display text-h2 font-extrabold">Also available: CNC and CAD workflow consulting</h2>
+      <p class="mt-4 max-w-2xl text-ink/75">
+        Outside of Northern Michigan, we also work with shop owners and CNC operators on Microvellum, Fusion 360 CAM, nesting strategy, and general CAD/CAM workflow — the same drafting and programming discipline behind every part we cut, applied to your shop.
+      </p>
+      <a href="/consulting/" class="mt-4 inline-block font-mono text-sm text-blueline-ink hover:underline">Learn about consulting &rarr;</a>
+    </div>
+  </section>
+
+  <QuoteCtaBand />
+</Base>

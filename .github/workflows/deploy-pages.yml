@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - main
-      - claude/compassionate-heisenberg-vr50e9
+      - claude/goldsmiths-casework-site-u0m7tz
   workflow_dispatch:
 
 permissions:

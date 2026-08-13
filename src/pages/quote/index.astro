@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import QuoteForm from "@/components/QuoteForm.astro";
+import PhoneLink from "@/components/PhoneLink.astro";
+import { site } from "@/config/site";
+import { isDev } from "@/lib/placeholder";
+import { breadcrumbSchema } from "@/lib/schema";
+
+const crumbs = [{ name: "Home", path: "/" }, { name: "Request a Quote", path: "/quote/" }];
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const projectTypes = services.map((s) => ({ slug: s.id, title: s.data.title }));
+---
+
+<Base
+  title="Request a Quote | Goldsmith's Casework — Petoskey, MI"
+  description="Send your drawings, sketch, or rough dimensions and get a quote for CNC-cut parts or shop drawings from Goldsmith's Casework."
+  path="/quote/"
+  jsonLd={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <section class="mx-auto max-w-3xl px-6 py-12">
+    <h1 class="font-display text-h1 font-extrabold">Request a quote</h1>
+    <p class="mt-4 text-lede text-ink/75">
+      Tell us what you need cut and send whatever drawings you have. We quote every job individually — no published price list — so the more detail you give us, the faster we can turn a number around.
+    </p>
+    {(site.phone || isDev) && (
+      <p class="mt-2 text-sm text-ink/60">
+        In a hurry or on a job site? Call instead: <PhoneLink class="text-blueline-ink" />
+      </p>
+    )}
+
+    <QuoteForm projectTypes={projectTypes} />
+  </section>
+</Base>
