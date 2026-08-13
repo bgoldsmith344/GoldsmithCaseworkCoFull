@@ -3,17 +3,18 @@ import { site } from "@/config/site";
 import { primaryNav } from "@/lib/nav";
 import PhoneLink from "@/components/PhoneLink.astro";
 import Button from "@/components/Button.astro";
+import { withBase } from "@/lib/url";
 ---
 
 <header class="sticky top-0 z-50 border-b border-ink/10 bg-paper/95 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="font-display text-lg font-extrabold tracking-tight">
+    <a href={withBase("/")} class="font-display text-lg font-extrabold tracking-tight">
       {site.displayName}
     </a>
 
     <nav aria-label="Primary" class="hidden items-center gap-6 md:flex">
       {primaryNav.map((item) => (
-        <a href={item.href} class="font-body text-sm font-medium hover:text-blueline-ink">
+        <a href={withBase(item.href)} class="font-body text-sm font-medium hover:text-blueline-ink">
           {item.label}
         </a>
       ))}
@@ -40,7 +41,7 @@ import Button from "@/components/Button.astro";
 
   <nav id="mobile-nav" aria-label="Mobile" class="hidden flex-col gap-1 border-t border-ink/10 bg-paper px-6 py-4 md:hidden">
     {primaryNav.map((item) => (
-      <a href={item.href} class="py-2 font-body text-base font-medium">
+      <a href={withBase(item.href)} class="py-2 font-body text-base font-medium">
         {item.label}
       </a>
     ))}

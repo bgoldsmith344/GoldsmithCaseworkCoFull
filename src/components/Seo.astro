@@ -1,5 +1,6 @@
 ---
 import { site } from "@/config/site";
+import { withBase } from "@/lib/url";
 
 interface Props {
   title: string;
@@ -9,8 +10,8 @@ interface Props {
 }
 
 const { title, description, path, jsonLd = [] } = Astro.props;
-const canonical = new URL(path, Astro.site).toString();
-const ogImage = new URL("/images/og-default.svg", Astro.site).toString();
+const canonical = new URL(withBase(path), Astro.site).toString();
+const ogImage = new URL(withBase("/images/og-default.svg"), Astro.site).toString();
 ---
 
 <title>{title}</title>

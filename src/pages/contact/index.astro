@@ -6,6 +6,7 @@ import PhoneLink from "@/components/PhoneLink.astro";
 import { site } from "@/config/site";
 import { isDev } from "@/lib/placeholder";
 import { breadcrumbSchema } from "@/lib/schema";
+import { withBase } from "@/lib/url";
 
 const crumbs = [{ name: "Home", path: "/" }, { name: "Contact", path: "/contact/" }];
 ---
@@ -21,7 +22,7 @@ const crumbs = [{ name: "Home", path: "/" }, { name: "Contact", path: "/contact/
   <section class="mx-auto max-w-4xl px-6 py-12">
     <h1 class="font-display text-h1 font-extrabold">Contact</h1>
     <p class="mt-4 max-w-xl text-lede text-ink/75">
-      Have a project ready to quote? <a href="/quote/" class="text-blueline-ink hover:underline">Use the quote form</a> — it takes file uploads.
+      Have a project ready to quote? <a href={withBase("/quote/")} class="text-blueline-ink hover:underline">Use the quote form</a> — it takes file uploads.
       For anything else — consulting, a general question, following up on a job — reach us directly.
     </p>
 

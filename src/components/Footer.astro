@@ -3,6 +3,7 @@ import { site } from "@/config/site";
 import { primaryNav, legalNav } from "@/lib/nav";
 import PhoneLink from "@/components/PhoneLink.astro";
 import { isDev } from "@/lib/placeholder";
+import { withBase } from "@/lib/url";
 ---
 
 <footer class="border-t border-ink/10 bg-spruce text-paper">
@@ -30,7 +31,7 @@ import { isDev } from "@/lib/placeholder";
         <p class="spec-tag text-paper/60">Site</p>
         <ul class="mt-3 space-y-2 text-sm">
           {primaryNav.map((item) => (
-            <li><a href={item.href} class="hover:underline">{item.label}</a></li>
+            <li><a href={withBase(item.href)} class="hover:underline">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -47,7 +48,7 @@ import { isDev } from "@/lib/placeholder";
       <p>&copy; {new Date().getFullYear()} {site.legalName ?? site.displayName}. All rights reserved.</p>
       <div class="flex gap-4">
         {legalNav.map((item) => (
-          <a href={item.href} class="hover:underline">{item.label}</a>
+          <a href={withBase(item.href)} class="hover:underline">{item.label}</a>
         ))}
       </div>
     </div>

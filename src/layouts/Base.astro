@@ -2,6 +2,7 @@
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Seo from "@/components/Seo.astro";
+import { withBase } from "@/lib/url";
 import "@/styles/global.css";
 // @ts-expect-error — Fontsource ships no types for its raw font-file exports
 import archivoDisplayWoff2 from "@fontsource/archivo/files/archivo-latin-800-normal.woff2?url";
@@ -21,7 +22,7 @@ const { title, description, path, jsonLd = [] } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
     <meta name="theme-color" content="#1b3a31" />
     <link rel="preload" href={archivoDisplayWoff2} as="font" type="font/woff2" crossorigin />
     <Seo title={title} description={description} path={path} jsonLd={jsonLd} />

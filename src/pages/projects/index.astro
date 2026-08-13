@@ -4,6 +4,7 @@ import Base from "@/layouts/Base.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
 import { breadcrumbSchema } from "@/lib/schema";
+import { withBase } from "@/lib/url";
 
 const crumbs = [{ name: "Home", path: "/" }, { name: "Projects", path: "/projects/" }];
 const projects = (await getCollection("projects")).filter((p) => !p.data.draft);
@@ -37,8 +38,8 @@ const projects = (await getCollection("projects")).filter((p) => !p.data.draft);
         <p class="font-mono text-sm text-ink/60">[ Gallery photos coming soon ]</p>
         <p class="mt-2 text-ink/70">
           We're building this out as jobs are completed. In the meantime, see what we cut on the
-          <a href="/services/" class="text-blueline-ink hover:underline"> services page</a>, or
-          <a href="/quote/" class="text-blueline-ink hover:underline"> request a quote</a> to talk through your project directly.
+          <a href={withBase("/services/")} class="text-blueline-ink hover:underline"> services page</a>, or
+          <a href={withBase("/quote/")} class="text-blueline-ink hover:underline"> request a quote</a> to talk through your project directly.
         </p>
       </div>
     )}

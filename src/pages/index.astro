@@ -10,6 +10,7 @@ import QuoteCtaBand from "@/components/QuoteCtaBand.astro";
 import PhoneLink from "@/components/PhoneLink.astro";
 import { site } from "@/config/site";
 import { localBusinessSchema } from "@/lib/schema";
+import { withBase } from "@/lib/url";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 
@@ -62,7 +63,7 @@ const reasons = [
   <section class="mx-auto max-w-6xl px-6 py-16">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <h2 class="font-display text-h2 font-extrabold">What we cut</h2>
-      <a href="/services/" class="font-mono text-sm text-blueline-ink hover:underline">All services &rarr;</a>
+      <a href={withBase("/services/")} class="font-mono text-sm text-blueline-ink hover:underline">All services &rarr;</a>
     </div>
     <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
@@ -104,7 +105,7 @@ const reasons = [
     <div class="mt-10">
       <CapabilitiesStrip />
     </div>
-    <a href="/capabilities/" class="mt-6 inline-block font-mono text-sm text-blueline-ink hover:underline">Full specs &rarr;</a>
+    <a href={withBase("/capabilities/")} class="mt-6 inline-block font-mono text-sm text-blueline-ink hover:underline">Full specs &rarr;</a>
   </section>
 
   <div class="centerline mx-auto max-w-6xl"></div>
@@ -124,7 +125,7 @@ const reasons = [
       <p class="mt-4 max-w-2xl text-ink/75">
         Outside of Northern Michigan, we also work with shop owners and CNC operators on Microvellum, Fusion 360 CAM, nesting strategy, and general CAD/CAM workflow — the same drafting and programming discipline behind every part we cut, applied to your shop.
       </p>
-      <a href="/consulting/" class="mt-4 inline-block font-mono text-sm text-blueline-ink hover:underline">Learn about consulting &rarr;</a>
+      <a href={withBase("/consulting/")} class="mt-4 inline-block font-mono text-sm text-blueline-ink hover:underline">Learn about consulting &rarr;</a>
     </div>
   </section>
 
