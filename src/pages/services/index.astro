@@ -23,6 +23,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
       Every job starts the same way: send us what you have, we draft a shop drawing for your approval, then we cut. Below are the part types we cut most — if yours doesn't fit neatly into one, send it anyway.
     </p>
 
+    <h2 class="sr-only">All services</h2>
     <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
         <ServiceCard

@@ -48,7 +48,7 @@ const crumbs = [
     <section class="bg-spruce text-paper">
       <div class="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-2 md:items-center">
         <div>
-          <span class="spec-tag text-blueline-ink">{service.data.specTag}</span>
+          <span class="spec-tag text-blueline-bright">{service.data.specTag}</span>
           <h1 class="mt-2 font-display text-h1 font-extrabold">{service.data.title}</h1>
           <p class="mt-4 max-w-xl text-lede text-paper/80">{service.data.summary}</p>
           <div class="mt-8">
@@ -128,7 +128,7 @@ const crumbs = [
         <li class="flex gap-2 text-ink/75"><span class="text-blueline-ink" aria-hidden="true">—</span>{item}</li>
       ))}
     </ul>
-    <p class="mt-4 font-mono text-xs text-ink/50">Files welcome: {service.data.specTag.includes("DXF") ? "DXF, DWG, PDF, or a photo" : "DXF, DWG, STEP, PDF, SKP, or a photo"}.</p>
+    <p class="mt-4 font-mono text-xs text-ink/70">Files welcome: {service.data.specTag.includes("DXF") ? "DXF, DWG, PDF, or a photo" : "DXF, DWG, STEP, PDF, SKP, or a photo"}.</p>
   </section>
 
   {related.length > 0 && (

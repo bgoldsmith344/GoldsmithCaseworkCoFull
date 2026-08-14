@@ -38,8 +38,8 @@ const projects = (await getCollection("projects")).filter((p) => !p.data.draft);
         <p class="font-mono text-sm text-ink/60">[ Gallery photos coming soon ]</p>
         <p class="mt-2 text-ink/70">
           We're building this out as jobs are completed. In the meantime, see what we cut on the
-          <a href={withBase("/services/")} class="text-blueline-ink hover:underline"> services page</a>, or
-          <a href={withBase("/quote/")} class="text-blueline-ink hover:underline"> request a quote</a> to talk through your project directly.
+          <a href={withBase("/services/")} class="text-blueline-ink underline"> services page</a>, or
+          <a href={withBase("/quote/")} class="text-blueline-ink underline"> request a quote</a> to talk through your project directly.
         </p>
       </div>
     )}

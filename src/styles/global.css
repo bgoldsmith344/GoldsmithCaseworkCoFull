@@ -23,6 +23,11 @@
      --color-blueline; only readable text uses this. */
   --color-blueline-ink: color-mix(in srgb, var(--color-blueline) 60%, var(--color-ink) 40%);
 
+  /* Same hue, lightened for text on dark sections (--spruce/--ink) — plain
+     --blueline is only ~3:1 there, still short of AA. Used wherever a
+     spec-tag or link sits on a dark fill instead of --paper. */
+  --color-blueline-bright: color-mix(in srgb, var(--color-blueline) 60%, var(--color-paper) 40%);
+
   /* ---- Type ---- */
   --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;

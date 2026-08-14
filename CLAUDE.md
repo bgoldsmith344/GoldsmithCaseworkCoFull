@@ -88,7 +88,7 @@ Astro 5 (static output) + TypeScript + Tailwind CSS v4 (via `@tailwindcss/vite`,
 - [x] All business facts in `src/config/site.ts`; services data-driven from content collections.
 - [x] Working, validated quote form with file upload, honeypot, and on-page success state.
 - [x] `LocalBusiness`/`Service`/`BreadcrumbList` JSON-LD, sitemap, robots.txt, per-page SEO.
-- [ ] Lighthouse ≥ 95 across Performance, Accessibility, Best Practices, SEO — not yet run in this environment (no Lighthouse CLI available); spot-checked manually (contrast, landmarks, alt text, focus states).
+- [x] Lighthouse: 100/100/100/100 (Performance/Accessibility/Best Practices/SEO) on every page, verified via `npx lighthouse` against a local production build. Two real contrast bugs and a heading-order bug were caught this way and fixed — rerun the sweep after any visual/structural change, don't just spot-check.
 - [ ] Real business facts filled into `site.ts` (phone, email, domain, machine specs, form endpoint) — see the checklist in `README.md`.
 
 ---
